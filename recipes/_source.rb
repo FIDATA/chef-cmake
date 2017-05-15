@@ -6,7 +6,7 @@
 include_recipe "build-essential" # ~FC007 uses `suggests`
 
 cache_dir = Chef::Config[:file_cache_path]
-cmake_version = node["cmake"]["source"]["version"]
+cmake_version = node["cmake"]["version"]
 
 remote_file "#{cache_dir}/cmake-#{cmake_version}.tar.gz" do
   source "http://www.cmake.org/files/v#{cmake_version[/^\d\.\d/, 0]}/cmake-#{cmake_version}.tar.gz" # rubocop:disable LineLength

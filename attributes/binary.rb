@@ -3,10 +3,6 @@
 # Attributes:: binary
 #
 
-# have to defer getting latest version until after git is installed.
-# Ideally, git would be run on the host rather than the guest so that
-# git didn't have to be installed
-default["cmake"]["binary"]["version"] = "LATEST"
 default["cmake"]["binary"]["repo"]    = "https://github.com/Kitware/CMake.git"
 default["cmake"]["binary"]["prefix"]  = "/usr/local"
 

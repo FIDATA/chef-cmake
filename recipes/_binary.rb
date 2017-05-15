@@ -11,12 +11,12 @@ cmake_prefix   = node["cmake"]["binary"]["prefix"]
 
 package "git" do
   action :install
-  only_if { node["cmake"]["binary"]["version"] == "LATEST" }
+  only_if { node["cmake"]["version"] == "LATEST" }
 end
 
 ruby_block "get latest" do
   block do
-    if node["cmake"]["binary"]["version"] == "LATEST"
+    if node["cmake"]["version"] == "LATEST"
       vers = []
       IO.popen("git ls-remote -t #{cmake_repo}").each do |line|
         m = line.match(%r{^\S+\s+refs\/tags\/v(\d+.\d+.\d+)$})
@@ -25,15 +25,15 @@ ruby_block "get latest" do
         end
       end
       vers.sort
-      node.set["cmake"]["binary"]["version"] = vers[-1].to_s
+      node.set["cmake"]["version"] = vers[-1].to_s
     end
-    node.set["cmake"]["binary"]["sh"] = "cmake-#{node['cmake']['binary']['version']}-#{cmake_platform}-#{cmake_arch}.sh" # rubocop:disable LineLength
+    node.set["cmake"]["binary"]["sh"] = "cmake-#{node['cmake']['version']}-#{cmake_platform}-#{cmake_arch}.sh" # rubocop:disable LineLength
   end
 end
 
 remote_file "get sh" do
   path lazy { "#{cache_dir}/#{node['cmake']['binary']['sh']}" }
-  source lazy { "http://www.cmake.org/files/v#{node['cmake']['binary']['version'][/^\d\.\d/, 0]}/#{node['cmake']['binary']['sh']}" } # rubocop:disable LineLength
+  source lazy { "http://www.cmake.org/files/v#{node['cmake']['version'][/^\d\.\d/, 0]}/#{node['cmake']['binary']['sh']}" } # rubocop:disable LineLength
 end
 
 directory "prefix" do
