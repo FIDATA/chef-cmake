@@ -9,14 +9,7 @@ end
 
 cmake_version = node["cmake"]["version"]
 
-windows_package "CMake #{cmake_version}, a cross-platform, open-source build system" do
-  source "http://www.cmake.org/files/v#{cmake_version[/^\d\.\d/, 0]}/cmake-#{cmake_version}-win32-x86.exe"
-  only_if { platform_family?('windows') }
-end
-
-env 'PATH' do 
-  value 'C:\Program Files (x86)\CMake\bin'
-  delim ';'
-  action :modify
+chocolatey_package 'cmake.install' do
+  options "--version=#{cmake_version} --installargs=\"ALLUSERS=1 ADD_CMAKE_TO_PATH=System\""
   only_if { platform_family?('windows') }
 end
