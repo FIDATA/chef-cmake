@@ -33,7 +33,7 @@ end
 
 remote_file "get sh" do
   path lazy { "#{cache_dir}/#{node['cmake']['binary']['sh']}" }
-  source lazy { "http://www.cmake.org/files/v#{node['cmake']['version'][/^\d\.\d/, 0]}/#{node['cmake']['binary']['sh']}" } # rubocop:disable LineLength
+  source lazy { "http://www.cmake.org/files/v#{node['cmake']['version'][/^\d+\.\d+/, 0]}/#{node['cmake']['binary']['sh']}" } # rubocop:disable LineLength
 end
 
 directory "prefix" do
